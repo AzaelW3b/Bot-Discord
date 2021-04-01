@@ -3,7 +3,11 @@
  const client = new Discord.Client();
  let texto = new MessageEmbed();
  const prefijo = "$";
+
+ const variables = new Map()
+
  const config = require("./config.json");
+
  
 client.on('ready',()=>{
 
@@ -56,6 +60,23 @@ client.on('message', message =>{
         console.log(comandoMsj);
         console.log(segundoParametro);
 
+        if(comandoMsj === 'var'){
+            if(segundoParametro.length === 0){
+                return message.reply('Ingresa nombre de variable')
+            } else {
+                variables.set(segundoParametro[0],segundoParametro[2])
+                return message.reply(variables.get(segundoParametro[0]))
+            }
+        }
+
+        if(comandoMsj === 'echo'){
+            console.log(variables.has(segundoParametro[0]))
+            if(variables.has(segundoParametro[0])){
+                return message.reply(variables.get(segundoParametro[0]))
+            } else {
+                return message.reply('Variable no declarada')
+            }
+        }
 
         if(comandoMsj === 'palabra'){
             if(segundoParametro.length === 0) return message.reply('Ingresa la palabra a modificar');
@@ -78,11 +99,6 @@ client.on('message', message =>{
         message.channel.send('Puto el que diga Je');
         
     }
-
-    // if(message.content === '!cheso'){
-
-    //     message.reply('Tuvo un mal dia :(');
-    // }
    
     if(message.content === '!cheso'){
         const adjuntar = new MessageAttachment('https://scontent.fver2-1.fna.fbcdn.net/v/t1.6435-1/p320x320/89022380_3273081726038868_5186283570968133632_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=7206a8&_nc_ohc=O5D5CwasXKYAX8Xinrp&_nc_ht=scontent.fver2-1.fna&tp=6&oh=76747201afd18eece537fdc7688fa1bc&oe=608A7E2C');
@@ -140,4 +156,6 @@ client.on('message', message =>{
 });
 
  //para que el bot inicie sesion
+
  client.login(config.token);
+
