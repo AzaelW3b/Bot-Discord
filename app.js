@@ -3,7 +3,11 @@
  const client = new Discord.Client();
  let texto = new MessageEmbed();
  const prefijo = "$";
+
  const variables = new Map()
+
+ const config = require("./config.json");
+
  
 client.on('ready',()=>{
 
@@ -152,4 +156,6 @@ client.on('message', message =>{
 });
 
  //para que el bot inicie sesion
- client.login('ODI2NzAyMDQwMTg5MjM5Mjk3.YGQURQ.7MZs2_T_5Zye5-SdwLtvmkLvQOY');
+
+ client.login(config.token);
+
